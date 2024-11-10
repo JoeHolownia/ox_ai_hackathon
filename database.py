@@ -60,3 +60,24 @@ def get_meals_by_month(year, month):
     meals = cursor.fetchall()
     conn.close()
     return meals
+
+def get_symptoms():
+    conn = sqlite3.connect('health_tracker.db')
+    cursor = conn.cursor()
+    
+    # Select only the symptoms column from the meals table
+    cursor.execute('SELECT symptoms FROM meals')
+    symptoms_data = cursor.fetchall()
+    
+    conn.close()
+
+    # If symptoms are stored as comma-separated values, split them into individual symptoms
+    symptoms_list = []
+    for symptoms in symptoms_data:
+        # Assuming symptoms are stored as a comma-separated string (e.g. "Headache, Nausea, Fatigue")
+        symptoms_list.extend(symptoms[0].split(","))
+    
+    # Clean up any leading or trailing spaces from symptoms
+    symptoms_list = [symptom.strip() for symptom in symptoms_list]
+    
+    return symptoms_list

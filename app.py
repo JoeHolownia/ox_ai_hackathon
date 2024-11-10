@@ -4,7 +4,7 @@ from PIL import Image
 from io import BytesIO
 import pandas as pd
 from datetime import datetime
-from database import init_db, insert_meal, get_meals
+from database import init_db, insert_meal, get_meals, get_symptoms
 
 init_db()
 
@@ -84,6 +84,7 @@ if st.button("Submit"):
         st.success("Meal and health symptoms submitted successfully!")
     else:
         st.error("Please make sure to fill in all the fields (image, symptoms, and questions).")
+
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #SIDE BAR
@@ -205,3 +206,12 @@ for row in range(row_count):
         else:
             with cols_in_row[col]:
                 st.write("")  # Empty cell if there's no day to display
+
+# Display symptoms
+st.sidebar.subheader("Symptom History")
+symptoms = get_symptoms()
+symptom_df = pd.DataFrame(symptoms, columns=["ID", "Date", "Description", "Level"])
+st.sidebar.write(symptom_df[["Date", "Description", "Level"]])
+# Placeholder for Nutritional Analysis
+st.sidebar.subheader("Nutritional Analysis & Suggestions")
+st.sidebar.write("Your nutrient intake trends and suggestions will appear here.")
