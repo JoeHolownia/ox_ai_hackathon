@@ -1,4 +1,6 @@
-# Nutrify - README
+# Nutrify
+
+![Alt text](logo.png "a title")
 
 ## Overview
 Nutrify is an innovative app designed to help users track their nutritional intake, correlate diet to health symptoms, and provide personalized food recommendations based on their specific health needs. By combining AI-driven food recognition and health tracking, Nutrify empowers users to make informed decisions about their diet and optimize their wellness.
