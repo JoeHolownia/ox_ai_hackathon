@@ -145,6 +145,7 @@ for meal in filtered_meals:
     if symptoms:
         meal_symptoms.append(symptoms)
 
+'''
 # Now, create a DataFrame for correlation
 df = pd.DataFrame({
     'Nutrient Value': meal_nutrients,
@@ -161,7 +162,7 @@ if len(df) > 0:
     st.sidebar.pyplot(plt)
 else:
     st.sidebar.write("No data available for this month to show the correlation.")
-
+'''
 # Initialize the calendar layout
 meal_by_day = {day: [] for day in range(1, days_in_month + 1)}
 
