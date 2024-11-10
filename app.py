@@ -208,11 +208,11 @@ for row in range(row_count):
             with cols_in_row[col]:
                 st.write("")  # Empty cell if there's no day to display
 
-# Display symptoms
+# # Display symptoms
 st.sidebar.subheader("Symptom History")
-symptoms = get_symptoms()
-symptom_df = pd.DataFrame(symptoms, columns=["ID", "Date", "Description", "Level"])
-st.sidebar.write(symptom_df[["Date", "Description", "Level"]])
-# Placeholder for Nutritional Analysis
-st.sidebar.subheader("Nutritional Analysis & Suggestions")
-st.sidebar.write("Your nutrient intake trends and suggestions will appear here.")
+# symptoms = get_symptoms()
+# symptom_df = pd.DataFrame(symptoms, columns=["ID", "Date", "Description", "Level"])
+# st.sidebar.write(symptom_df[["Date", "Description", "Level"]])
+# # Placeholder for Nutritional Analysis
+# st.sidebar.subheader("Nutritional Analysis & Suggestions")
+# st.sidebar.write("Your nutrient intake trends and suggestions will appear here.")
