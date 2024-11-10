@@ -92,7 +92,11 @@ For AI implementation you will need to add your OnDemand API key to the api file
 
 ## OnDemand API Utilisation
 
-The app interfaces with the OnDemand API using 2 agent endpoints: 1) an image agent to report food nutritional information and 2) a chat agent with voice recognition to report symptomatic data.
+The app interfaces with the OnDemand API using 2 agent endpoints: 
+
+1) an image agent to report food nutritional information (ChatGPT-4o wrapper with Image Agent)
+
+2) a chat agent with voice recognition to report symptomatic data (ChatGPT-4o wrapper with Voice Agent)
 
 After signing up for OnDemand AI, generate a secret API token and paste it to the ondemand_api_token.txt file.
 
