@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 from PIL import Image
 from io import BytesIO
+import tempfile
+import os
 
 # Set up the Streamlit page
 st.set_page_config(page_title="Nutrition Assistant", page_icon="🍎")
@@ -35,7 +37,6 @@ create_session_body = {
 # Make the request to create a chat session
 response = requests.post(create_session_url, headers=create_session_headers, json=create_session_body)
 response_data = response.json()
-print(response_data)
 
 # Extract session ID from the response
 session_id = response_data['data']['id']
@@ -44,6 +45,11 @@ session_id = response_data['data']['id']
 submit_query_url = f'https://api.on-demand.io/chat/v1/sessions/{session_id}/query'
 submit_query_headers = {
     'apikey': api_key
+}
+submit_img_url = f"https://api.on-demand.io/media/v1/public/file/raw"
+submit_img_header = {
+                 "content-type": "multipart/form-data",
+                 "apikey": f"{api_key}"
 }
 
 # --- Main UI Components ---
@@ -65,8 +71,53 @@ with col2:
     if uploaded_image:
         st.image(uploaded_image, caption="Uploaded Food Image", use_container_width=True)  # Updated to use_container_width
 
+if uploaded_image:
+
+    # Define where to save the image
+    save_path = f"./food_image.jpg"
+    
+    # Save the file
+    with open(save_path, "wb") as file:
+        file.write(uploaded_image.getbuffer())
+    
+    st.success(f"Image saved at: {save_path}")
+
+    # # Convert the uploaded image to binary
+    image_data = uploaded_image.read()
+
+    files = {
+        "file": image_data
+    }
+
+    st.write(f"{os.path.getsize(save_path)}")
+
+    # img body data
+    submit_img_body = {
+        "createdBy": "Joe Holownia",
+        "updatedBy": "Joe Holownia",
+        "sessionId": f"{session_id}",
+        "name": "image_of_food",
+        "plugins": ["plugin-1712327325", "plugin-1713962163"],
+        "sizeBytes":  7834093,
+        "responseMode": "sync"
+    }             
+
+    # submit image to image api
+    try:
+
+        response = requests.post(submit_img_url, 
+                                 headers=submit_img_header, 
+                                 files=files, 
+                                 data=submit_img_body)
+
+        # To print the response
+        st.write(response.status_code)
+        st.write(response.json())
+    except Exception as e:
+        st.write("Error:", e)
+
 # Chatbot-like input box with placeholder text
-user_input = st.text_input("", placeholder="Ask me a question")
+user_input = st.text_input("", placeholder="")
 
 # --- Processing Input ---
 
@@ -75,10 +126,7 @@ if user_input and uploaded_image:
     # Display the user query
     st.write(f"User asked: {user_input}")
 
-    # Convert the uploaded image to binary
-    image_data = uploaded_image.read()
-
-    # TODO: we may need to include the files and data in this query body somehow for ondemand?
+    # chat query body data
     submit_query_body = {
         "endpointId": "predefined-openai-gpt4o",
         "query": f"{user_input}",
@@ -86,22 +134,17 @@ if user_input and uploaded_image:
         "responseMode": "sync"
     }
 
-    # Send the image and prompt to your chatbot API
-    # api_url = "https://api.on-demand.io/chat/v1/sessions"  # Replace with your actual API URL
-    files = {'image': image_data}
-    data = {'question': user_input}
-
     try:
         response = requests.post(submit_query_url,
                                  headers=submit_query_headers,
-                                 json=submit_query_body,
-                                 files=files, 
-                                 data=data)
+                                 json=submit_query_body
+                                 )
         if response.status_code == 200:
             result = response.json()
+            print(result)
             # Display the chatbot's response
             st.write("Chatbot response:")
-            st.write(result["answer"])
+            st.write(result['data']['answer'])
         else:
             st.write("Error: Unable to get a response from the chatbot API.")
     except Exception as e:
