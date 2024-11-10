@@ -77,7 +77,7 @@ Nutrify is designed to empower individuals to take control of their health throu
 
 ## Usage:
 
-For the streamlit demo, run:
+For the streamlit demo, create a conda environment and run:
 
 pip install streamlit
 pip install pandas
