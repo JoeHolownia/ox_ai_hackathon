@@ -5,6 +5,8 @@
 ## Overview
 Nutrify is an innovative app designed to help users track their nutritional intake, correlate diet to health symptoms, and provide personalized food recommendations based on their specific health needs. By combining AI-driven food recognition and health tracking, Nutrify empowers users to make informed decisions about their diet and optimize their wellness.
 
+Check out the Nutrify demo now on: https://oxaihackathon-4ce74jn8mo4zfkuv7wqrfn.streamlit.app/
+
 ## Key Features
 - **Food Recognition**: Take a picture of your meal or input the meal via text or audio. The app analyzes the food, identifies ingredients, and estimates their nutritional content.
 - **Nutritional Insights**: Get detailed information about your meal’s nutritional profile, including fats, proteins, carbohydrates, vitamins, and minerals. The app compares your intake with the recommended daily values to guide healthier choices.
