@@ -37,7 +37,9 @@ submit_query_body = {
 }
 
 # Make the request to submit a query
-query_response = requests.post(submit_query_url, headers=submit_query_headers, json=submit_query_body)
+query_response = requests.post(submit_query_url, 
+                               headers=submit_query_headers, 
+                               json=submit_query_body)
 query_response_data = query_response.json()
 
 # Print the response from the query
