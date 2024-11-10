@@ -103,6 +103,8 @@ After signing up for OnDemand AI, generate a secret API token and paste it to th
 
 ## Team Members:
 
-Josef Holownia - OnDemand AI Development
 Emma McMillan - App Development
+
 Sofia Finnemore - Research, Design and Presentation
+
+Josef Holownia - OnDemand AI Development
