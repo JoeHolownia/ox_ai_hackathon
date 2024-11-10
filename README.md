@@ -81,18 +81,18 @@ For the streamlit demo live version, simply visit this url: https://oxaihackatho
 
 To run this locally, instead do the following:
 
-  create a conda environment and run:
+  - create a conda environment and run:
   
-  pip install streamlit
-  pip install pandas
-  pip install sqlite3
-  pip install matplotlib
+  * pip install streamlit
+  * pip install pandas
+  * pip install sqlite3
+  * pip install matplotlib
   
-  Then to run the app locally in your web browser, run:
+  - Then to run the app locally in your web browser, run:
   
-  streamlit run app.py
+  * streamlit run app.py
   
-  For AI implementation you will need to add your OnDemand API key to the api file. See below.
+  - For AI implementation you will need to add your OnDemand API key to the api file. See below.
 
 ## OnDemand API Utilisation
 
