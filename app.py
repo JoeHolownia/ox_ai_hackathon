@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 import requests
 from PIL import Image
@@ -7,9 +6,10 @@ from io import BytesIO
 # Set up the Streamlit page
 st.set_page_config(page_title="Nutrition Assistant", page_icon="🍎")
 
+st.image("logo.png", width=500)  # Adjust width as needed
+
 # Title and instructions
-st.title("NUTRIFY")
-st.write("Upload a food image and ask questions about its nutritional information!")
+# st.write("Upload a food image and ask questions about its nutritional information!")
 
 # Sidebar for meal history
 st.sidebar.markdown("## Meal History")
@@ -18,16 +18,21 @@ st.sidebar.write("View your meal log and nutritional insights here.")
 # --- Main UI Components ---
 
 # Camera button for file upload
-st.subheader("Tap the camera icon below to upload an image of your food:")
+st.markdown(
+    "<h3 style='text-align: center;'>Tap the camera icon below to upload an image of your food:</h3>", 
+    unsafe_allow_html=True
+)
+
+# st.subheader("Tap the camera icon below to upload an image of your food:")
 
 # Custom camera icon button for file upload
 col1, col2, col3 = st.columns([1, 3, 1])
 with col2:
     # Display the camera icon as a button
-    if st.button("📷 Upload Food Image", key="upload_button"):
-        uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"], key="image_uploader")
-        if uploaded_image:
-            st.image(uploaded_image, caption="Uploaded Food Image", use_column_width=True)
+    uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"], key="image_uploader")
+
+    if uploaded_image:
+        st.image(uploaded_image, caption="Uploaded Food Image", use_container_width=True)  # Updated to use_container_width
 
 # Chatbot-like input box with placeholder text
 user_input = st.text_input("", placeholder="Ask me a question")
@@ -57,6 +62,3 @@ if user_input and uploaded_image:
             st.write("Error: Unable to get a response from the chatbot API.")
     except Exception as e:
         st.write("Error:", e)
-
-else:
-    x = True
