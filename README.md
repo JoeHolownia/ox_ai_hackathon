@@ -87,3 +87,18 @@ pip install matplotlib
 Then to run the app locally in your web browser, run:
 
 streamlit run app.py
+
+For AI implementation you will need to add your OnDemand API key to the api file. See below.
+
+## OnDemand API Utilisation
+
+The app interfaces with the OnDemand API using 2 agent endpoints: 1) an image agent to report food nutritional information and 2) a chat agent with voice recognition to report symptomatic data.
+
+After signing up for OnDemand AI, generate a secret API token and paste it to the ondemand_api_token.txt file.
+
+
+## Team Members:
+
+Josef Holownia - OnDemand AI Development
+Emma McMillan - App Development
+Sofia Finnemore - Research, Design and Presentation
