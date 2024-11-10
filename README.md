@@ -73,3 +73,17 @@ Nutrify addresses these challenges by automating food tracking through AI-powere
 
 ## Conclusion
 Nutrify is designed to empower individuals to take control of their health through personalized nutrition tracking. With its intuitive interface, AI-driven insights, and focus on connecting food intake to health symptoms, Nutrify makes it easier to eat healthier, manage chronic conditions, and boost overall well-being.
+
+
+## Usage:
+
+For the streamlit demo, run:
+
+pip install streamlit
+pip install pandas
+pip install sqlite3
+pip install matplotlib
+
+Then to run the app locally in your web browser, run:
+
+streamlit run app.py
