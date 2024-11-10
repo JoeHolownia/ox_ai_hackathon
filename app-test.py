@@ -46,8 +46,10 @@ if uploaded_image and user_input:
 else:
     st.write("Please upload an image and ask for nutritional information!")
 
+'''
 # Meal History Tab
 st.sidebar.header("Meal History")
 meals = get_meals()
 meal_df = pd.DataFrame(meals, columns=["ID", "Date", "Image", "Description", "Nutrient Info"])
 st.sidebar.write(meal_df[["Date", "Description", "Nutrient Info"]])
+'''
