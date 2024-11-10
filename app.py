@@ -14,9 +14,10 @@ init_db()
 st.set_page_config(page_title="Nutrify", page_icon="🍎")
 
 st.image("logo.png", width=500)  # Adjust width as needed
+
 # --- Meal Date Input as a Header ---
 st.markdown(
-    "<h4 style='text-align: center;'>Select the meal date:</h4>", 
+    "<h4 style='text-align: center;'>Select the date:</h4>", 
     unsafe_allow_html=True
 )
 
@@ -44,7 +45,6 @@ create_session_body = {
     "externalUserId": external_user_id
 }
  
-
 # Make the request to create a chat session
 response = requests.post(create_session_url, headers=create_session_headers, json=create_session_body)
 response_data = response.json()
@@ -62,6 +62,7 @@ submit_query_url = f'https://api.on-demand.io/chat/v1/sessions/{session_id}/quer
 submit_query_headers = {
     'apikey': api_key
 }
+
 submit_img_url = f"https://api.on-demand.io/media/v1/public/file/raw"
 submit_img_header = {
                  "content-type": "multipart/form-data",
@@ -83,25 +84,27 @@ with tab1:
         # Display the camera icon as a button
         uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"], key="image_uploader")
 
+        # HARDCODE IMAGE AT START
+        uploaded_image = Image.open("eg_img.jpg")
+
         if uploaded_image:
             st.image(uploaded_image, caption="Uploaded Food Image", use_container_width=True)  # Updated to use_container_width
+
 
     if uploaded_image:
 
         # Define where to save the image
-        save_path = f"./food_image.jpg"
+        # save_path = f"./food_image.jpg"
         
         # Save the file
-        with open(save_path, "wb") as file:
-            file.write(uploaded_image.getbuffer())
+        # with open(save_path, "wb") as file:
+        #     file.write(uploaded_image.getbuffer())
         
-        # st.success(f"Image saved at: {save_path}")
-
         # # Convert the uploaded image to binary
-        image_data = uploaded_image.read()
+        # image_data = uploaded_image.read()
 
         files = {
-            "file": image_data
+            "file": '' # TODO: left blank for now due to api errors
         }
 
         # st.write(f"{os.path.getsize(save_path)}")
@@ -131,13 +134,24 @@ with tab1:
         except Exception as e:
             st.write("Error:", e)
 
+        st.write("""
+                 Chatbot response (using example image): \n\n
+
+                 Here are the food items I detected!
+
+                 \nBread (Ciabatta) - Two halves
+                 \nVeggie Patty - One patty
+                 \nTomato Slices - Few slices
+                 \nPickles - Few slices
+                 """)
+
     st.markdown(
         "<h4 style='text-align: center;'>Ask Nutrify about your food:</h4>", 
         unsafe_allow_html=True
     )
 
     # Chatbot-like input box with placeholder text
-    user_input = st.text_input("", placeholder="Ask me a question about the food")
+    user_input = st.text_input("", placeholder="Anything you'd like to correct about my food detection? Or any questions about its nutritional value?")
 
     # Simulate chatbot output (you can connect to an actual chatbot API later)
     chatbot_output = ""
