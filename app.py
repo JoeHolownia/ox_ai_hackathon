@@ -1,65 +1,62 @@
 # app.py
 import streamlit as st
-import pandas as pd
-import datetime
-from database import init_db, insert_meal, insert_symptom, get_meals, get_symptoms
+import requests
+from PIL import Image
+from io import BytesIO
 
-# Initialize Database
-init_db()
+# Set up the Streamlit page
+st.set_page_config(page_title="Nutrition Assistant", page_icon="🍎")
 
-# Title and tabs
-st.title("Personal Health & Nutrition Tracker")
-tab1, tab2, tab3 = st.tabs(["Log Meal", "Log Symptoms", "History & Analysis"])
+# Title and instructions
+st.title("NUTRIFY")
+st.write("Upload a food image and ask questions about its nutritional information!")
 
-# Log Meal Tab
-with tab1:
-    st.header("Log Your Meal")
-    date = st.date_input("Meal Date", datetime.date.today())
-    meal_description = st.text_input("Meal Description")
-    meal_image = st.file_uploader("Upload Meal Image (optional)", type=["jpg", "png"])
+# Sidebar for meal history
+st.sidebar.markdown("## Meal History")
+st.sidebar.write("View your meal log and nutritional insights here.")
 
-    if st.button("Save Meal"):
-        if meal_description:
-            nutrient_info = "Sample nutrient data"  # Placeholder for AI-based nutrient analysis
-            insert_meal(date, meal_image.read() if meal_image else None, meal_description, nutrient_info)
-            st.success("Meal logged successfully!")
+# --- Main UI Components ---
+
+# Camera button for file upload
+st.subheader("Tap the camera icon below to upload an image of your food:")
+
+# Custom camera icon button for file upload
+col1, col2, col3 = st.columns([1, 3, 1])
+with col2:
+    # Display the camera icon as a button
+    if st.button("📷 Upload Food Image", key="upload_button"):
+        uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"], key="image_uploader")
+        if uploaded_image:
+            st.image(uploaded_image, caption="Uploaded Food Image", use_column_width=True)
+
+# Chatbot-like input box with placeholder text
+user_input = st.text_input("", placeholder="Ask me a question")
+
+# --- Processing Input ---
+
+if user_input and uploaded_image:
+    # Display the user query
+    st.write(f"User asked: {user_input}")
+
+    # Convert the uploaded image to binary
+    image_data = uploaded_image.read()
+
+    # Send the image and prompt to your chatbot API
+    api_url = "https://your-chatbot-api-url.com/process"  # Replace with your actual API URL
+    files = {'image': image_data}
+    data = {'question': user_input}
+
+    try:
+        response = requests.post(api_url, files=files, data=data)
+        if response.status_code == 200:
+            result = response.json()
+            # Display the chatbot's response
+            st.write("Chatbot response:")
+            st.write(result["answer"])
         else:
-            st.warning("Please enter a meal description.")
+            st.write("Error: Unable to get a response from the chatbot API.")
+    except Exception as e:
+        st.write("Error:", e)
 
-# Log Symptoms Tab
-with tab2:
-    st.header("Log Your Symptoms")
-    date = st.date_input("Symptom Date", datetime.date.today())
-    symptom_description = st.text_input("Symptom Description")
-    symptom_level = st.slider("Symptom Severity Level (1-10)", 1, 10, 5)
-
-    if st.button("Save Symptom"):
-        if symptom_description:
-            insert_symptom(date, symptom_description, symptom_level)
-            st.success("Symptom logged successfully!")
-        else:
-            st.warning("Please enter a symptom description.")
-
-# History & Analysis Tab
-with tab3:
-    st.header("View Meal & Symptom History")
-
-    # Display meals
-    st.subheader("Meal History")
-    meals = get_meals()
-    meal_df = pd.DataFrame(meals, columns=["ID", "Date", "Image", "Description", "Nutrient Info"])
-    st.write(meal_df[["Date", "Description", "Nutrient Info"]])
-
-    # Display symptoms
-    st.subheader("Symptom History")
-    symptoms = get_symptoms()
-    symptom_df = pd.DataFrame(symptoms, columns=["ID", "Date", "Description", "Level"])
-    st.write(symptom_df[["Date", "Description", "Level"]])
-
-    # Placeholder for Nutritional Analysis
-    st.subheader("Nutritional Analysis & Suggestions")
-    st.write("Your nutrient intake trends and suggestions will appear here.")
-
-    # Placeholder for calendar view
-    st.subheader("Calendar View (Placeholder)")
-    st.write("Future implementation could include a calendar for detailed history view.")
+else:
+    x = True
