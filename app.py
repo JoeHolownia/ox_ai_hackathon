@@ -89,7 +89,7 @@ if uploaded_image:
         "file": image_data
     }
 
-    st.write(f"{os.path.getsize(save_path)}")
+    # st.write(f"{os.path.getsize(save_path)}")
 
     # img body data
     submit_img_body = {
@@ -111,8 +111,8 @@ if uploaded_image:
                                  data=submit_img_body)
 
         # To print the response
-        st.write(response.status_code)
-        st.write(response.json())
+        # st.write(response.status_code)
+        # st.write(response.json())
     except Exception as e:
         st.write("Error:", e)
 
