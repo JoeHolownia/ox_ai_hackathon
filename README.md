@@ -77,18 +77,22 @@ Nutrify is designed to empower individuals to take control of their health throu
 
 ## Usage:
 
-For the streamlit demo, create a conda environment and run:
+For the streamlit demo live version, simply visit this url: https://oxaihackathon-4ce74jn8mo4zfkuv7wqrfn.streamlit.app/
 
-pip install streamlit
-pip install pandas
-pip install sqlite3
-pip install matplotlib
+To run this locally, instead do the following:
 
-Then to run the app locally in your web browser, run:
-
-streamlit run app.py
-
-For AI implementation you will need to add your OnDemand API key to the api file. See below.
+  create a conda environment and run:
+  
+  pip install streamlit
+  pip install pandas
+  pip install sqlite3
+  pip install matplotlib
+  
+  Then to run the app locally in your web browser, run:
+  
+  streamlit run app.py
+  
+  For AI implementation you will need to add your OnDemand API key to the api file. See below.
 
 ## OnDemand API Utilisation
 
